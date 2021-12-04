@@ -1,21 +1,42 @@
-import { useState, useEffect } from 'react';
-function Hello() {
-  useEffect(() => {
-    console.log('created');
-    return () => {
-      // clean up function
-      console.log('destroyed');
-    };
-  }, []);
-  return <h1>Hello</h1>;
-}
+import { useState } from 'react';
+
 function App() {
-  const [show, setShow] = useState(false);
-  const onClick = () => setShow((prev) => !prev);
+  const [todo, setTodo] = useState('');
+  // const todos = document.querySelector('ul');
+  const [todos, setTodos] = useState([]);
+  const onChange = (event) => setTodo(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (todo === '') {
+      return;
+    }
+
+    setTodos((currentArray) => [todo, ...currentArray]);
+    setTodo('');
+
+    // const list = document.createElement('li');
+    // list.innerText = todo;
+    // todos.appendChild(list);
+  };
+  console.log(todos);
   return (
     <div className='App'>
-      <button onClick={onClick}>{show ? 'Hide' : 'Show'}</button>
-      {show ? <Hello /> : null}
+      <h1>My ToDos ({todos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type='text'
+          placeholder='Write your to do...'
+          value={todo}
+          onChange={onChange}
+        />
+        <button>Add ToDo</button>
+        <hr />
+        <ul>
+          {todos.map((todo, index) => (
+            <li key={index}>{todo}</li>
+          ))}
+        </ul>
+      </form>
     </div>
   );
 }
