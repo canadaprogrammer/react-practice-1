@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.js": "/canadaprogrammer.github.io/react-practice-1/static/js/main.1c7c554c.chunk.js",
-    "main.js.map": "/canadaprogrammer.github.io/react-practice-1/static/js/main.1c7c554c.chunk.js.map",
-    "runtime-main.js": "/canadaprogrammer.github.io/react-practice-1/static/js/runtime-main.bd6afd01.js",
-    "runtime-main.js.map": "/canadaprogrammer.github.io/react-practice-1/static/js/runtime-main.bd6afd01.js.map",
-    "static/js/2.90ef0b49.chunk.js": "/canadaprogrammer.github.io/react-practice-1/static/js/2.90ef0b49.chunk.js",
-    "static/js/2.90ef0b49.chunk.js.map": "/canadaprogrammer.github.io/react-practice-1/static/js/2.90ef0b49.chunk.js.map",
-    "index.html": "/canadaprogrammer.github.io/react-practice-1/index.html",
-    "static/js/2.90ef0b49.chunk.js.LICENSE.txt": "/canadaprogrammer.github.io/react-practice-1/static/js/2.90ef0b49.chunk.js.LICENSE.txt"
+    "main.js": "/react-practice-1/static/js/main.1c7c554c.chunk.js",
+    "main.js.map": "/react-practice-1/static/js/main.1c7c554c.chunk.js.map",
+    "runtime-main.js": "/react-practice-1/static/js/runtime-main.80617065.js",
+    "runtime-main.js.map": "/react-practice-1/static/js/runtime-main.80617065.js.map",
+    "static/js/2.90ef0b49.chunk.js": "/react-practice-1/static/js/2.90ef0b49.chunk.js",
+    "static/js/2.90ef0b49.chunk.js.map": "/react-practice-1/static/js/2.90ef0b49.chunk.js.map",
+    "index.html": "/react-practice-1/index.html",
+    "static/js/2.90ef0b49.chunk.js.LICENSE.txt": "/react-practice-1/static/js/2.90ef0b49.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.bd6afd01.js",
+    "static/js/runtime-main.80617065.js",
     "static/js/2.90ef0b49.chunk.js",
     "static/js/main.1c7c554c.chunk.js"
   ]
