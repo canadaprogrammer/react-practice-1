@@ -95,6 +95,10 @@
   }
   ```
 
+## Keys
+
+- Keys help React identify which items have changed, and added, or are removed. Keys should be given to the elements **inside the array** to give the elements a stable identity.
+
 # Todo List
 
 - ```jsx
@@ -222,3 +226,163 @@
 
   export default App;
   ```
+
+## Router
+
+- `npm i react-router-dom`
+
+- ```jsx
+  import React from 'react';
+  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+  import Home from './routes/Home';
+  import Detail from './routes/Detail';
+
+  function App() {
+    return (
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/movie/:id' element={<Detail />}></Route>
+        </Routes>
+      </Router>
+    );
+  }
+  ```
+
+## Movie Detail View
+
+- on Home.js
+
+  - ```jsx
+    import { useState, useEffect } from 'react';
+    import Movies from '../components/Movies';
+
+    function Home() {
+      const [loading, setLoading] = useState(true);
+      const [movies, setMovies] = useState([]);
+
+      const getMovies = async () => {
+        const json = await (
+          await fetch(
+            'https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=rating&limit=20&page=1'
+          )
+        ).json();
+        setMovies(json.data.movies);
+        setLoading(false);
+        console.log(json.data.movies);
+      };
+      useEffect(() => {
+        getMovies();
+      }, []);
+
+      return (
+        <div className='App'>
+          <h1>Movies {loading ? null : movies.length}</h1>
+          {loading ? (
+            <h2>Loading...</h2>
+          ) : (
+            <div>
+              {movies.map((movie) => (
+                <Movies
+                  key={movie.id}
+                  id={movie.id}
+                  coverImg={movie.medium_cover_image}
+                  title={movie.title}
+                  summary={movie.summary}
+                  genres={movie.genres}
+                  year={movie.year}
+                  rating={movie.rating}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    export default Home;
+    ```
+
+- on Movies.js
+
+  - Use `Link` instead of `a` tag
+
+  - ```jsx
+    import PropTypes from 'prop-types';
+    import { Link } from 'react-router-dom';
+
+    function Movies({ id, coverImg, title, year, rating, summary, genres }) {
+      return (
+        <div>
+          <img src={coverImg} alt={title} />
+          <h2>
+            <Link to={`/movie/${id}`}>
+              {title} ({year}) - {rating}
+            </Link>
+          </h2>
+          <p>{summary}</p>
+          <ul>
+            {genres.map((genre) => (
+              <li key={genre}>{genre}</li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    Movies.propTypes = {
+      id: PropTypes.number.isRequired,
+      coverImg: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      year: PropTypes.number.isRequired,
+      rating: PropTypes.number.isRequired,
+      summary: PropTypes.string.isRequired,
+      genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+    };
+
+    export default Movies;
+    ```
+
+- on Detail.js
+
+  - `useParams` to get parameters
+
+  - ```jsx
+    import { useEffect, useState } from 'react';
+    import { useParams } from 'react-router-dom';
+    import Movie from '../components/Movie';
+
+    function Detail() {
+      const { id } = useParams();
+      const [loading, setLoading] = useState(true);
+      const [movie, setMovie] = useState();
+      const getMovie = async () => {
+        const json = await (
+          await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+        ).json();
+        setMovie(json.data.movie);
+        setLoading(false);
+      };
+      useEffect(() => {
+        getMovie();
+      }, []);
+      return (
+        <div>
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <Movie
+              coverImg={movie.medium_cover_image}
+              title={movie.title}
+              summary={movie.description_full}
+              genres={movie.genres}
+              year={movie.year}
+              rating={movie.rating}
+            />
+          )}
+        </div>
+      );
+    }
+
+    export default Detail;
+    ```
