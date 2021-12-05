@@ -231,6 +231,12 @@
 
 - `npm i react-router-dom`
 
+- `Router basename`: string
+
+  - The base URL for all locations. If your app is served from a sub-directory on your server, you'll want to set this tot he sub-directory.
+
+  - `<Router basename={process.env.PUBLIC_URL}>`
+
 - ```jsx
   import React from 'react';
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -239,7 +245,7 @@
 
   function App() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/movie/:id' element={<Detail />}></Route>
@@ -347,8 +353,14 @@
 
   - `useParams` to get parameters
 
+  - `useCallback` to solve missing dependency: `React Hook useEffect has a missing dependency: 'getMovie'. Either include it or remove the dependency array react-hooks/exhaustive-deps`
+
+    - `exhaustive-deps` is a new ESLint rule that verifies the list of dependencies for Hooks lik `useEffect` and similar, protecting against the state closure pitfalls.
+
+    - `useCallback` will return a memoized version of the callback. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders.
+
   - ```jsx
-    import { useEffect, useState } from 'react';
+    import { useEffect, useState, useCallback } from 'react';
     import { useParams } from 'react-router-dom';
     import Movie from '../components/Movie';
 
@@ -356,16 +368,16 @@
       const { id } = useParams();
       const [loading, setLoading] = useState(true);
       const [movie, setMovie] = useState();
-      const getMovie = async () => {
+      const getMovie = useCallback(async () => {
         const json = await (
           await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
         ).json();
         setMovie(json.data.movie);
         setLoading(false);
-      };
+      }, [id]);
       useEffect(() => {
         getMovie();
-      }, []);
+      }, [getMovie]);
       return (
         <div>
           {loading ? (
@@ -386,3 +398,21 @@
 
     export default Detail;
     ```
+
+# PUblishing
+
+- `npm i gh-pages`
+
+- add `"homepage": "https://canadaprogrammer.github.io/react-practice-1"` on package.json
+
+- add below codes inside "scripts" on package.json
+
+  - ```json
+    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build"
+    ```
+
+- `npm run deploy`
+
+  - firstly, it runs `predeploy`
+  - and then `deploy`
