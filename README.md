@@ -399,6 +399,45 @@
     export default Detail;
     ```
 
+## Adding Page Buttons
+
+- ```jsx
+  const [page, setPage] = useState(1);
+
+  const getMovies = async (page) => {
+    const json = await (
+      await fetch(
+        `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=rating&limit=20&page=${page}`
+      )
+    ).json();
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getMovies(page);
+  }, [page]);
+
+  const prevPage = () => {
+    if (page > 1) {
+      setPage((current) => current - 1);
+      setLoading(true);
+    }
+  };
+
+  const nextPage = () => {
+    setPage((current) => current + 1);
+    setLoading(true);
+  };
+
+  return (
+    <div className='App'>
+      <h1>
+        Movies <button onClick={prevPage}>Prev</button>
+        {loading ? null : `Page: ${page}`}
+        <button onClick={nextPage}>Next</button>
+      </h1>
+  ```
+
 # PUblishing
 
 - `npm i gh-pages`

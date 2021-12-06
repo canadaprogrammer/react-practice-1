@@ -1,0 +1,63 @@
+body {
+  line-height: 1.2;
+}
+h1,
+h2,
+h3,
+p {
+  line-height: 1.2;
+  margin-top: 0;
+}
+.pageButtons {
+  float: right;
+}
+button {
+  margin: 0 15px;
+}
+.moviesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.movieWrapper {
+  display: flex;
+  width: 48%;
+  box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+}
+.image {
+  width: 130px;
+  position: relative;
+}
+.image img {
+  max-width: 90%;
+  position: absolute;
+  left: 15%;
+  top: -10px;
+  box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, 0.3);
+}
+.content {
+  width: calc(100% - 200px);
+  margin-left: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+.title {
+  font-size: 1.2em;
+}
+.summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.2em;
+  height: 3.6em;
+}
